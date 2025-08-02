@@ -4,16 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularApp", policy =>
-      policy
-        .WithOrigins("http://localhost:4200")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-    );
-});
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
@@ -25,30 +16,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/todos", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetTodos");
-
 app.UseCors("AllowAngularApp");
 
-app.Run();
+await app.RunAsync();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? name)
+static void ConfigureServices(this IServiceCollection services)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    services.AddOpenApi();
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAngularApp", policy =>
+          policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+        );
+    });
+
+    services
+        .AddControllers()
+        .AddApplicationPart(Assembly.Load("TodoListApi.Presentation"));
 }
