@@ -36,7 +36,7 @@ void ConfigureServices()
     builder.Services.AddScoped<ITodosService, TodosService>();
 
     // Register Repositories
-    builder.Services.AddScoped<ITodosRepository, TodosRepository>();
+    builder.Services.AddSingleton<ITodosRepository, TodosRepository>();
 }
 
 void Configure()

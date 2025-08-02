@@ -14,4 +14,9 @@ public class TodosRepository : ITodosRepository
     ];
 
     public List<Todo> GetTodos() => _todos;
+
+    public void AddTodo(Todo todo)
+    {
+        _todos.Add(todo);
+    }
 }

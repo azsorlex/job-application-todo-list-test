@@ -7,4 +7,9 @@ namespace TodoListApi.Application.Services;
 public class TodosService(ITodosRepository repository) : ITodosService
 {
     public List<Todo> GetTodos() => repository.GetTodos();
+
+    public void AddTodo(Todo todo)
+    {
+        repository.AddTodo(todo);
+    }
 }

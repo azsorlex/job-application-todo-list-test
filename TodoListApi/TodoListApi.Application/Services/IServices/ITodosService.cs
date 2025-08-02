@@ -5,4 +5,6 @@ namespace TodoListApi.Application.Services.IServices;
 public interface ITodosService
 {
     List<Todo> GetTodos();
+
+    void AddTodo(Todo todo);
 }
