@@ -1,29 +1,24 @@
-using System.Runtime.Intrinsics.X86;
+using System.Reflection;
+using TodoListApi.Application.Services;
+using TodoListApi.Application.Services.IServices;
+using TodoListApi.Infrastructure.Repositories;
+using TodoListApi.Infrastructure.Repositories.IRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.ConfigureServices();
+ConfigureServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-app.UseCors("AllowAngularApp");
+Configure();
 
 await app.RunAsync();
-
-static void ConfigureServices(this IServiceCollection services)
+void ConfigureServices()
 {
-    services.AddOpenApi();
-    services.AddCors(options =>
+    builder.Services.AddOpenApi();
+    builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAngularApp", policy =>
           policy
@@ -33,7 +28,30 @@ static void ConfigureServices(this IServiceCollection services)
         );
     });
 
-    services
+    builder.Services
         .AddControllers()
         .AddApplicationPart(Assembly.Load("TodoListApi.Presentation"));
+
+    // Register Services
+    builder.Services.AddScoped<ITodosService, TodosService>();
+
+    // Register Repositories
+    builder.Services.AddScoped<ITodosRepository, TodosRepository>();
+}
+
+void Configure()
+{
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.MapOpenApi();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseHttpsRedirection();
+    app.UseRouting();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.UseCors("AllowAngularApp");
 }
