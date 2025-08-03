@@ -22,4 +22,8 @@ export class TodoService {
   toggleTodoCompleted(todo: Todo): Observable<Object> {
     return this.http.patch(`${this.apiUrl}/toggle/${todo.id}`, todo);
   }
+
+  deleteTodo(todo: Todo): Observable<Object> {
+    return this.http.delete(`${this.apiUrl}/delete/${todo.id}`);
+  }
 };

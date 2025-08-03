@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import Todo from '../../../core/models/todo.model';
 import { TodoService } from '../../../core/services/todo.service';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [
-    FormsModule
-  ],
   templateUrl: './todo-list.html',
-  styleUrl: './todo-list.css'
+  styleUrl: './todo-list.css',
+  imports: [
+    FormsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatButtonModule,
+  ],
 })
 export class TodoList implements OnInit {
   todos: Todo[] = [];
@@ -17,13 +25,7 @@ export class TodoList implements OnInit {
   loading: boolean = true;
   loadError: string | null = null;
 
-  activeTab: 'incomplete' | 'complete' = 'incomplete';
-
   constructor(private todoService: TodoService) { }
-  
-  setTab(tab: 'incomplete' | 'complete') {
-    this.activeTab = tab;
-  }
 
   get incompleteTodos(): Todo[] {
     return this.todos.filter(todo => !todo.isCompleted);
@@ -47,7 +49,7 @@ export class TodoList implements OnInit {
       },
       error: (err: unknown) => {
         this.loading = false;
-        this.loadError = 'Failed to load items.'
+        this.loadError = 'Failed to load items.';
         console.error('Failed to load todos:', err);
       },
     });
@@ -81,5 +83,19 @@ export class TodoList implements OnInit {
         console.error('Failed to toggle todo:', err);
       }
     });
+  }
+
+  onDeleteButtonClick(todo: Todo): void {
+    if (confirm(`Are you sure you want to delete "${todo.name}"?`)) {
+      this.todoService.deleteTodo(todo).subscribe({
+        next: () => {
+          delete this.todos[this.todos.indexOf(todo)];
+        },
+        error: (err: unknown) => {
+          this.loadError = 'Failed to delete item.';
+          console.error('Failed to delete todo:', err);
+        }
+      });
+    }
   }
 }

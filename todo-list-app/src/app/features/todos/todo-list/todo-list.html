@@ -1,83 +1,100 @@
 <div class="topbar">
   <input
-    type="text"
     id="newTodo"
     placeholder="Add a new item"
     [(ngModel)]="newTodoName"
     (keyup.enter)="addTodo(newTodoName); newTodoName='';"
   />
   <button
-    class="submitButton"
+    matButton="filled"
     (click)="addTodo(newTodoName); newTodoName='';"
   >
     Add
   </button>
 </div>
-<div class="tabs">
-  <button
-    [class.active]="activeTab === 'incomplete'"
-    (click)="setTab('incomplete')"
-  >Incomplete</button>
-  <button
-    [class.active]="activeTab === 'complete'"
-    (click)="setTab('complete')"
-  >Completed</button>
-</div>
+
 @if (loading) {
 <div class="loading-placeholder">
-  Loading todos...
+  Loading items...
 </div>
 }
 @if (loadError) {
 <div class="error-placeholder">
   {{ loadError }}
+  <button matButton="filled" (click)="loadTodos();">
+    Retry
+  </button>
 </div>
 }
 
 @if (!loading && !loadError) {
-@if (activeTab === 'incomplete') {
-@if (incompleteTodos.length === 0) {
-<div class="no-todos-placeholder">
-  No items found. Let's add some!
-</div>
-} @else {
-<ul class="checkbox-list">
-  @for (todo of incompleteTodos; track todo.id) {
-  <li>
-    <input
-      type="checkbox"
-      [checked]="todo.isCompleted"
-      (change)="toggleTodoCompleted(todo)"
-      id="todo-{{todo.id}}"
-    />
-    <label
-      [for]="'todo-' + todo.id"
-    >
-      {{ todo.name }}
-    </label>
-  </li>
-  }
-</ul>
-}
-} @else {
-@if (completeTodos.length === 0) {
-<div class="no-todos-placeholder">
-  No completed items yet.
-</div>
-} @else {
-<ul class="checkbox-list">
-  @for (todo of completeTodos; track todo.id) {
-  <li>
-    <input
-      type="checkbox"
-      [checked]="todo.isCompleted"
-      (change)="toggleTodoCompleted(todo)"
-      id="todo-{{todo.id}}"
-    />
-    <label [for]="'todo-' + todo.id">{{ todo.name }}</label>
-  </li>
-  }
-</ul>
-}
-}
+<mat-tab-group
+  animationDuration="500ms"
+  dynamicHeight
+>
+  <mat-tab label="Incomplete">
+    @if (incompleteTodos.length === 0) {
+    <div class="no-todos-placeholder">
+      No items found. Let's add some!
+    </div>
+    } @else {
+    <ul class="checkbox-list">
+      @for (todo of incompleteTodos; track todo.id) {
+      <li>
+        <mat-checkbox
+          [checked]="todo.isCompleted"
+          (change)="toggleTodoCompleted(todo)"
+          id="todo-{{todo.id}}"
+        />
+        <label [for]="'todo-' + todo.id">
+          {{ todo.name }}
+        </label>
+        <button
+          class="delete-btn"
+          (click)="onDeleteButtonClick(todo)"
+          title="Delete"
+        >
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Delete"
+            fontIcon="delete"
+          />
+        </button>
+      </li>
+      }
+    </ul>
+    }
+  </mat-tab>
+  <mat-tab label="Complete">
+    @if (completeTodos.length === 0) {
+    <div class="no-todos-placeholder">
+      No completed items yet.
+    </div>
+    } @else {
+    <ul class="checkbox-list">
+      @for (todo of completeTodos; track todo.id) {
+      <li>
+        <mat-checkbox
+          [checked]="todo.isCompleted"
+          (change)="toggleTodoCompleted(todo)"
+          id="todo-{{todo.id}}"
+        />
+        <label [for]="'todo-' + todo.id">{{ todo.name }}</label>
+        <button
+          class="delete-btn"
+          (click)="onDeleteButtonClick(todo)"
+          title="Delete"
+        >
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Delete"
+            fontIcon="delete"
+          />
+        </button>
+      </li>
+      }
+    </ul>
+    }
+  </mat-tab>
+</mat-tab-group>
 }

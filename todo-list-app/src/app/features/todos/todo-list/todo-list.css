@@ -19,6 +19,9 @@
   list-style: none;
   padding-left: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .checkbox-list label {
@@ -28,6 +31,36 @@
   overflow-wrap: anywhere;
   display: inline-block;
   max-width: 100%;
+}
+
+.checkbox-list li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.checkbox-list label {
+  flex: 1 1 auto;
+}
+
+.delete-btn {
+  margin-left: auto;
+}
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  align-self: right;
+  color: #d9534f;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+.delete-btn:hover {
+  color: #b52a1d;
 }
 
 .tabs {
@@ -52,4 +85,17 @@
   color: #007bff;
   border-bottom: 2px solid #007bff;
   font-weight: bold;
+}
+
+.loading-placeholder,
+.error-placeholder,
+.no-todos-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  margin-top: 16px;
 }
