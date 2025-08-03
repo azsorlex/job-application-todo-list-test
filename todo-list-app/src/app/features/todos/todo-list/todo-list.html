@@ -13,6 +13,16 @@
     Add
   </button>
 </div>
+<div class="tabs">
+  <button
+    [class.active]="activeTab === 'incomplete'"
+    (click)="setTab('incomplete')"
+  >Incomplete</button>
+  <button
+    [class.active]="activeTab === 'complete'"
+    (click)="setTab('complete')"
+  >Completed</button>
+</div>
 @if (loading) {
 <div class="loading-placeholder">
   Loading todos...
@@ -25,7 +35,8 @@
 }
 
 @if (!loading && !loadError) {
-@if (todos.length === 0) {
+@if (activeTab === 'incomplete') {
+@if (incompleteTodos.length === 0) {
 <div class="no-todos-placeholder">
   No items found. Let's add some!
 </div>
@@ -39,9 +50,34 @@
       (change)="toggleTodoCompleted(todo)"
       id="todo-{{todo.id}}"
     />
+    <label
+      [for]="'todo-' + todo.id"
+    >
+      {{ todo.name }}
+    </label>
+  </li>
+  }
+</ul>
+}
+} @else {
+@if (completeTodos.length === 0) {
+<div class="no-todos-placeholder">
+  No completed items yet.
+</div>
+} @else {
+<ul class="checkbox-list">
+  @for (todo of completeTodos; track todo.id) {
+  <li>
+    <input
+      type="checkbox"
+      [checked]="todo.isCompleted"
+      (change)="toggleTodoCompleted(todo)"
+      id="todo-{{todo.id}}"
+    />
     <label [for]="'todo-' + todo.id">{{ todo.name }}</label>
   </li>
   }
 </ul>
+}
 }
 }

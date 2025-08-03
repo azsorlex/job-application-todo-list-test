@@ -1,22 +1,55 @@
 .topbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #dee2e6;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 20px;
 }
 
 #newTodo {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 10px 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .checkbox-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
+}
+
+.checkbox-list label {
+  margin-left: 8px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.tabs button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+  border-bottom: 2px solid transparent;
+  margin: 0 8px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tabs button.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
 }

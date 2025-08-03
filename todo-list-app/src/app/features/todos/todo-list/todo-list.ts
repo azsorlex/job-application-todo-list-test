@@ -17,7 +17,13 @@ export class TodoList implements OnInit {
   loading: boolean = true;
   loadError: string | null = null;
 
+  activeTab: 'incomplete' | 'complete' = 'incomplete';
+
   constructor(private todoService: TodoService) { }
+  
+  setTab(tab: 'incomplete' | 'complete') {
+    this.activeTab = tab;
+  }
 
   get incompleteTodos(): Todo[] {
     return this.todos.filter(todo => !todo.isCompleted);
