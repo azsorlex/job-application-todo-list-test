@@ -45,4 +45,18 @@ public sealed class TodosController : ControllerBase
 
         return CreatedAtAction(nameof(GetTodos), new { success = true });
     }
+
+    [HttpDelete("delete/{id}")]
+    public IActionResult DeleteTodo(Guid id)
+    {
+        if (id == Guid.Empty)
+        {
+            _logger.LogWarning("Received empty GUID for todo deletion");
+            return BadRequest("Invalid todo ID");
+        }
+        _logger.LogInformation($"Deleting todo with ID: {id}");
+        _service.DeleteTodo(id);
+        _logger.LogInformation($"Todo with ID '{id}' deleted successfully");
+        return NoContent();
+    }
 }

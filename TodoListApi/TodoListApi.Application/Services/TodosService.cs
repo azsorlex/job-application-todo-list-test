@@ -12,4 +12,9 @@ public class TodosService(ITodosRepository repository) : ITodosService
     {
         repository.AddTodo(todo);
     }
+
+    public void DeleteTodo(Guid id)
+    {
+        repository.DeleteTodo(id);
+    }
 }

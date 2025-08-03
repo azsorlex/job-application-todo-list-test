@@ -19,4 +19,13 @@ public class TodosRepository : ITodosRepository
     {
         _todos.Add(todo);
     }
+
+    public void DeleteTodo(Guid id)
+    {
+        var todo = _todos.FirstOrDefault(t => t.Id == id);
+        if (todo != null)
+        {
+            _todos.Remove(todo);
+        }
+    }
 }

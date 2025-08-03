@@ -7,4 +7,6 @@ public interface ITodosService
     List<Todo> GetTodos();
 
     void AddTodo(Todo todo);
+
+    void DeleteTodo(Guid id);
 }
