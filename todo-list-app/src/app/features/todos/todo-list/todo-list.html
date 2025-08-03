@@ -1,7 +1,41 @@
+<div class="topbar">
+  <input
+    type="text"
+    id="newTodo"
+    placeholder="Add a new item"
+    [(ngModel)]="newTodoName"
+    (keyup.enter)="addTodo(newTodoName); newTodoName='';"
+  />
+  <button
+    class="submitButton"
+    (click)="addTodo(newTodoName); newTodoName='';"
+  >
+    Add
+  </button>
+</div>
+@if (loading) {
+<div class="loading-placeholder">
+  Loading todos...
+</div>
+}
+@if (loadError) {
+<div class="error-placeholder">
+  {{ loadError }}
+</div>
+}
+
+@if (!loading && !loadError) {
+@if (todos.length === 0) {
+<div class="no-todos-placeholder">
+  No items found. Let's add some!
+</div>
+} @else {
 <ul>
-  @for (todo of todos; track todo.name ) {
+  @for (todo of todos; track todo.id) {
   <li>
     {{ todo.name }}
   </li>
   }
 </ul>
+}
+}

@@ -7,11 +7,15 @@ import Todo from '../models/todo.model';
   providedIn: 'root',
 })
 export class TodoService {
-  private readonly apiUrl = 'https://localhost:7071/api';
+  private readonly apiUrl = 'https://localhost:7071/api/todos';
 
   constructor(private http: HttpClient) {}
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(`${this.apiUrl}/todos`);
+    return this.http.get<Todo[]>(this.apiUrl);
   };
+
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http.post<Todo>(`${this.apiUrl}/add`, todo)
+  }
 };

@@ -63,7 +63,7 @@ public class TodosControllerTests
          
         // Assert
         var createdResult = Assert.IsType<CreatedAtActionResult>(result);
-        Assert.Equal(nameof(_controller.GetTodos), createdResult.ActionName);
+        Assert.Equal(nameof(_controller.AddTodo), createdResult.ActionName);
         Assert.Equal(201, createdResult.StatusCode);
         _serviceMock.Verify(s => s.AddTodo(todo), Times.Once);
     }

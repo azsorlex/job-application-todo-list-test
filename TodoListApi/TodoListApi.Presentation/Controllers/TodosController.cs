@@ -43,7 +43,7 @@ public sealed class TodosController : ControllerBase
         _service.AddTodo(todo);
         _logger.LogInformation($"Todo '{todo.Name}' added successfully");
 
-        return CreatedAtAction(nameof(GetTodos), new { success = true });
+        return CreatedAtAction(nameof(AddTodo), todo);
     }
 
     [HttpPatch("toggle/{id}")]
