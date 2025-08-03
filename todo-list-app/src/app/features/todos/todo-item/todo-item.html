@@ -1,0 +1,21 @@
+<li>
+    <mat-checkbox
+        [checked]="todo.isCompleted"
+        (change)="onToggleCompleted()"
+        id="todo-{{todo.id}}"
+    />
+    <label [for]="'todo-' + todo.id">
+        {{ todo.name }}
+    </label>
+    <button
+        class="delete-btn"
+        (click)="onDelete()"
+        title="Delete"
+    >
+        <mat-icon
+            aria-hidden="false"
+            aria-label="Delete"
+            fontIcon="delete"
+        />
+    </button>
+</li>

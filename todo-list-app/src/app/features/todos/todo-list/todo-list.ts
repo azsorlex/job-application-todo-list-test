@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import Todo from '../../../core/models/todo.model';
 import { TodoService } from '../../../core/services/todo.service';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
+import { TodoItem } from '../todo-item/todo-item';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-todo-list',
@@ -13,10 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './todo-list.css',
   imports: [
     FormsModule,
-    MatIconModule,
-    MatCheckboxModule,
     MatTabsModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
+    TodoItem,
   ],
 })
 export class TodoList implements OnInit {
@@ -62,8 +62,7 @@ export class TodoList implements OnInit {
       next: (data) => {
         if (data && data.id) {
           this.todos.push(data);
-        } else {
-
+          this.newTodoName = '';
         }
       },
       error: (err: unknown) => {
@@ -89,7 +88,7 @@ export class TodoList implements OnInit {
     if (confirm(`Are you sure you want to delete "${todo.name}"?`)) {
       this.todoService.deleteTodo(todo).subscribe({
         next: () => {
-          delete this.todos[this.todos.indexOf(todo)];
+          this.todos = this.todos.filter(t => t.id !== todo.id);
         },
         error: (err: unknown) => {
           this.loadError = 'Failed to delete item.';

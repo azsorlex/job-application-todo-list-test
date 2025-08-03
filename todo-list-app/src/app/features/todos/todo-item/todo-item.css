@@ -1,0 +1,33 @@
+
+
+label {
+  margin-left: 8px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: inline-block;
+  max-width: 100%;
+  flex: 1;
+}
+
+li {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  position: relative;
+  align-items: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #d9534f;
+  transition: color 0.2s;
+  margin-left: auto;
+  align-self: center;
+}
+.delete-btn:hover {
+  color: #b52a1d;
+}

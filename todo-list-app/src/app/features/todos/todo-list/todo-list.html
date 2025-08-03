@@ -3,11 +3,11 @@
     id="newTodo"
     placeholder="Add a new item"
     [(ngModel)]="newTodoName"
-    (keyup.enter)="addTodo(newTodoName); newTodoName='';"
+    (keyup.enter)="addTodo(newTodoName)"
   />
   <button
     matButton="filled"
-    (click)="addTodo(newTodoName); newTodoName='';"
+    (click)="addTodo(newTodoName)"
   >
     Add
   </button>
@@ -15,7 +15,7 @@
 
 @if (loading) {
 <div class="loading-placeholder">
-  Loading items...
+  <mat-spinner diameter="48" />
 </div>
 }
 @if (loadError) {
@@ -40,27 +40,10 @@
     } @else {
     <ul class="checkbox-list">
       @for (todo of incompleteTodos; track todo.id) {
-      <li>
-        <mat-checkbox
-          [checked]="todo.isCompleted"
-          (change)="toggleTodoCompleted(todo)"
-          id="todo-{{todo.id}}"
-        />
-        <label [for]="'todo-' + todo.id">
-          {{ todo.name }}
-        </label>
-        <button
-          class="delete-btn"
-          (click)="onDeleteButtonClick(todo)"
-          title="Delete"
-        >
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Delete"
-            fontIcon="delete"
-          />
-        </button>
-      </li>
+      <app-todo-item
+        [todo]="todo"
+        (toggleCompleted)="toggleTodoCompleted(todo)"
+        (delete)="onDeleteButtonClick(todo)"/>
       }
     </ul>
     }
@@ -73,25 +56,10 @@
     } @else {
     <ul class="checkbox-list">
       @for (todo of completeTodos; track todo.id) {
-      <li>
-        <mat-checkbox
-          [checked]="todo.isCompleted"
-          (change)="toggleTodoCompleted(todo)"
-          id="todo-{{todo.id}}"
-        />
-        <label [for]="'todo-' + todo.id">{{ todo.name }}</label>
-        <button
-          class="delete-btn"
-          (click)="onDeleteButtonClick(todo)"
-          title="Delete"
-        >
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Delete"
-            fontIcon="delete"
-          />
-        </button>
-      </li>
+        <app-todo-item
+          [todo]="todo"
+          (toggleCompleted)="toggleTodoCompleted(todo)"
+          (delete)="onDeleteButtonClick(todo)"/>
       }
     </ul>
     }
