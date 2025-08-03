@@ -60,8 +60,6 @@ public class TodosControllerTests
 
         // Act
         var result = _controller.AddTodo(todo);
-
-        Console.WriteLine(result);
          
         // Assert
         var createdResult = Assert.IsType<CreatedAtActionResult>(result);

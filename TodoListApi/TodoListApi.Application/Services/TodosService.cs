@@ -17,7 +17,7 @@ public class TodosService(ITodosRepository repository) : ITodosService
     {
         var todo = repository.GetTodo(id);
         todo.IsCompleted = !todo.IsCompleted;
-        repository.UpdateTodo(todo);
+        repository.SaveChanges();
     }
 
     public void DeleteTodo(Guid id)

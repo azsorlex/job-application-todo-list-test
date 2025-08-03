@@ -4,23 +4,22 @@ using TodoListApi.Application.Services.IServices;
 using TodoListApi.Infrastructure.Repositories;
 using TodoListApi.Infrastructure.Repositories.IRepositories;
 
-var builder = WebApplication.CreateBuilder(args);
+const string ANGULAR_CORS_POLICY_NAME = "AllowAngularApp";
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+var builder = WebApplication.CreateBuilder(args);
 ConfigureServices();
 
 var app = builder.Build();
-
 Configure();
 
 await app.RunAsync();
+
 void ConfigureServices()
 {
     builder.Services.AddOpenApi();
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowAngularApp", policy =>
+        options.AddPolicy(ANGULAR_CORS_POLICY_NAME, policy =>
           policy
             .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
@@ -28,6 +27,7 @@ void ConfigureServices()
         );
     });
 
+    // Register Controllers
     builder.Services
         .AddControllers()
         .AddApplicationPart(Assembly.Load("TodoListApi.Presentation"));
@@ -36,22 +36,20 @@ void ConfigureServices()
     builder.Services.AddScoped<ITodosService, TodosService>();
 
     // Register Repositories
-    builder.Services.AddSingleton<ITodosRepository, TodosRepository>();
+    builder.Services.AddSingleton<ITodosRepository, TodosRepository>(); // Using Singleton so the in-memory store isn't cleared.
 }
 
 void Configure()
 {
-    // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
     }
 
-    app.UseHttpsRedirection();
-
+    app.UsePathBase("/api");
     app.UseHttpsRedirection();
     app.UseRouting();
     app.UseAuthorization();
     app.MapControllers();
-    app.UseCors("AllowAngularApp");
+    app.UseCors(ANGULAR_CORS_POLICY_NAME);
 }

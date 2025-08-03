@@ -5,8 +5,9 @@ namespace TodoListApi.Infrastructure.Repositories;
 
 public class TodosRepository : ITodosRepository
 {
+    // Simulating a database with an in-memory list for demonstration purposes.
     private readonly List<Todo> _todos = [];
-
+    
     public List<Todo> GetTodos() => _todos;
 
     public Todo GetTodo(Guid id) => _todos.FirstOrDefault(t => t.Id == id) ?? throw new KeyNotFoundException("Todo not found");
@@ -16,11 +17,9 @@ public class TodosRepository : ITodosRepository
         _todos.Add(todo);
     }
 
-    public void UpdateTodo(Todo todo)
+    public void SaveChanges()
     {
-        todo.Name = todo.Name;
-        todo.IsCompleted = todo.IsCompleted;
-        // context.SaveChangesAsync(); // In a real-world scenario.
+        // context.SaveChangesAsync(); In a real-world scenario.
     }
 
     public void DeleteTodo(Guid id)

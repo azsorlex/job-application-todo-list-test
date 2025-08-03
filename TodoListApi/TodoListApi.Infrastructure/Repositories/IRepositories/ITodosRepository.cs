@@ -10,7 +10,7 @@ public interface ITodosRepository
 
     void AddTodo(Todo todo);
 
-    void UpdateTodo(Todo todo);
+    void SaveChanges();
 
     void DeleteTodo(Guid id);
 }

@@ -62,7 +62,7 @@ public class TodosServiceTests
         // Assert
         Assert.True(todo.IsCompleted);
         _repositoryMock.Verify(r => r.GetTodo(id), Times.Once);
-        _repositoryMock.Verify(r => r.UpdateTodo(todo), Times.Once);
+        _repositoryMock.Verify(r => r.SaveChanges(), Times.Once);
     }
 
     [Fact]

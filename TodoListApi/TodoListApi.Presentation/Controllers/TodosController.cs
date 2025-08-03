@@ -7,7 +7,7 @@ using TodoListApi.Domain.Models;
 namespace TodoListApi.Presentation.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 [Produces("application/json")]
 public sealed class TodosController : ControllerBase
 {
