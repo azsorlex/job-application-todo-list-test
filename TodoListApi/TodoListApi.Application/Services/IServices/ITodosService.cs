@@ -8,5 +8,7 @@ public interface ITodosService
 
     void AddTodo(Todo todo);
 
+    void ToggleTodoCompletion(Guid id);
+
     void DeleteTodo(Guid id);
 }

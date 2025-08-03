@@ -46,6 +46,20 @@ public sealed class TodosController : ControllerBase
         return CreatedAtAction(nameof(GetTodos), new { success = true });
     }
 
+    [HttpPatch("toggle/{id}")]
+    public IActionResult ToggleTodoCompletion(Guid id)
+    {
+        if (id == Guid.Empty)
+        {
+            _logger.LogWarning("Received empty GUID for todo toggle");
+            return BadRequest("Invalid todo ID");
+        }
+        _logger.LogInformation($"Toggling completion status for todo with ID: {id}");
+        _service.ToggleTodoCompletion(id);
+        _logger.LogInformation($"Todo with ID '{id}' toggled successfully");
+        return NoContent();
+    }
+
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteTodo(Guid id)
     {

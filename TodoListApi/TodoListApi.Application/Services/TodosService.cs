@@ -13,6 +13,13 @@ public class TodosService(ITodosRepository repository) : ITodosService
         repository.AddTodo(todo);
     }
 
+    public void ToggleTodoCompletion(Guid id)
+    {
+        var todo = repository.GetTodo(id);
+        todo.IsCompleted = !todo.IsCompleted;
+        repository.UpdateTodo(todo);
+    }
+
     public void DeleteTodo(Guid id)
     {
         repository.DeleteTodo(id);

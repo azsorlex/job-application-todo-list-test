@@ -5,19 +5,22 @@ namespace TodoListApi.Infrastructure.Repositories;
 
 public class TodosRepository : ITodosRepository
 {
-    private readonly List<Todo> _todos = [
-        new Todo { Id = Guid.NewGuid(), Name = "Buy groceries", IsCompleted = false },
-        new Todo { Id = Guid.NewGuid(), Name = "Walk the dog", IsCompleted = true },
-        new Todo { Id = Guid.NewGuid(), Name = "Finish homework", IsCompleted = false },
-        new Todo { Id = Guid.NewGuid(), Name = "Read a book", IsCompleted = true },
-        new Todo { Id = Guid.NewGuid(), Name = "Clean the house", IsCompleted = false }
-    ];
+    private readonly List<Todo> _todos = [];
 
     public List<Todo> GetTodos() => _todos;
+
+    public Todo GetTodo(Guid id) => _todos.FirstOrDefault(t => t.Id == id) ?? throw new KeyNotFoundException("Todo not found");
 
     public void AddTodo(Todo todo)
     {
         _todos.Add(todo);
+    }
+
+    public void UpdateTodo(Todo todo)
+    {
+        todo.Name = todo.Name;
+        todo.IsCompleted = todo.IsCompleted;
+        // context.SaveChangesAsync(); // In a real-world scenario.
     }
 
     public void DeleteTodo(Guid id)
