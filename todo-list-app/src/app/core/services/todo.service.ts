@@ -18,4 +18,8 @@ export class TodoService {
   addTodo(todo: Todo): Observable<Todo> {
     return this.http.post<Todo>(`${this.apiUrl}/add`, todo)
   }
+
+  toggleTodoCompleted(todo: Todo): Observable<Object> {
+    return this.http.patch(`${this.apiUrl}/toggle/${todo.id}`, todo);
+  }
 };

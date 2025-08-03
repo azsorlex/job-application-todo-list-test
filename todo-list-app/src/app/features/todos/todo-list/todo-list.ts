@@ -17,7 +17,15 @@ export class TodoList implements OnInit {
   loading: boolean = true;
   loadError: string | null = null;
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService) { }
+
+  get incompleteTodos(): Todo[] {
+    return this.todos.filter(todo => !todo.isCompleted);
+  }
+
+  get completeTodos(): Todo[] {
+    return this.todos.filter(todo => todo.isCompleted);
+  }
 
   ngOnInit(): void {
     this.loadTodos();
@@ -55,5 +63,17 @@ export class TodoList implements OnInit {
         console.error("Failed to add todo:", err);
       }
     })
+  }
+
+  toggleTodoCompleted(todo: Todo): void {
+    this.todoService.toggleTodoCompleted(todo).subscribe({
+      next: () => {
+        todo.isCompleted = !todo.isCompleted;
+      },
+      error: (err: unknown) => {
+        this.loadError = 'Failed to update item.';
+        console.error('Failed to toggle todo:', err);
+      }
+    });
   }
 }

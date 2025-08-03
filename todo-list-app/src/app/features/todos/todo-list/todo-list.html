@@ -30,10 +30,16 @@
   No items found. Let's add some!
 </div>
 } @else {
-<ul>
-  @for (todo of todos; track todo.id) {
+<ul class="checkbox-list">
+  @for (todo of incompleteTodos; track todo.id) {
   <li>
-    {{ todo.name }}
+    <input
+      type="checkbox"
+      [checked]="todo.isCompleted"
+      (change)="toggleTodoCompleted(todo)"
+      id="todo-{{todo.id}}"
+    />
+    <label [for]="'todo-' + todo.id">{{ todo.name }}</label>
   </li>
   }
 </ul>
