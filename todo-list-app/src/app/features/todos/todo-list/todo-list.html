@@ -8,6 +8,7 @@
   <button
     matButton="filled"
     (click)="addTodo(newTodoName)"
+    [disabled]="!newTodoName.trim()"
   >
     Add
   </button>

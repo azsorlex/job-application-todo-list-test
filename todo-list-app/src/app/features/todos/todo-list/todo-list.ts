@@ -56,7 +56,10 @@ export class TodoList implements OnInit {
   }
 
   addTodo(name: string): void {
-    const newTodo: Todo = { name };
+    if (!name || !name.trim()) {
+      return;
+    }
+    const newTodo: Todo = { name: name.trim() };
 
     this.todoService.addTodo(newTodo).subscribe({
       next: (data) => {

@@ -39,6 +39,10 @@
   font-weight: bold;
 }
 
+.checkbox-list {
+  padding: 0;
+}
+
 .loading-placeholder,
 .error-placeholder,
 .no-todos-placeholder {

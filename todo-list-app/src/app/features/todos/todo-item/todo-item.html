@@ -3,10 +3,9 @@
         [checked]="todo.isCompleted"
         (change)="onToggleCompleted()"
         id="todo-{{todo.id}}"
-    />
-    <label [for]="'todo-' + todo.id">
+    >
         {{ todo.name }}
-    </label>
+    </mat-checkbox>
     <button
         class="delete-btn"
         (click)="onDelete()"
